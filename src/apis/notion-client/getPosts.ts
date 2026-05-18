@@ -48,7 +48,47 @@ export const getPosts = async () => {
     return []
   } else {
     // Construct Data
-    const pageIds = getAllPageIds(response)
+    let pageIds = getAllPageIds(response)
+
+    // Fallback: if collection_query is empty (pageIds === 0), try to find pages by scanning blocks
+    // Some Notion record maps don't populate collection_query; in that case find blocks whose
+    // parent_id or collection_id matches the collection's id
+    if (!pageIds || pageIds.length === 0) {
+      try {
+        const collectionId = rawMetadata?.value?.collection_id || collection?.id || null
+        const blockKeys = Object.keys(block || {})
+        const found: string[] = []
+        for (let i = 0; i < blockKeys.length; i++) {
+          const key = blockKeys[i]
+          const val = block[key]?.value?.value
+          if (!val) continue
+          // prefer explicit collection_id on the block
+          if (val.collection_id && collectionId && val.collection_id === collectionId) {
+            found.push(key)
+            continue
+          }
+          // check parent_id or parent_table indicating it's part of the collection
+          if (val.parent_id && collectionId && val.parent_id === collectionId) {
+            found.push(key)
+            continue
+          }
+          if (val.parent_table && val.parent_table === "collection") {
+            found.push(key)
+            continue
+          }
+        }
+
+        if (found.length > 0) {
+          // Use unique keys
+          pageIds = Array.from(new Set(found))
+          // eslint-disable-next-line no-console
+          console.warn(`[getPosts] fallback found ${pageIds.length} page ids from blocks`)
+        }
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.warn("[getPosts] fallback scanning blocks failed", e)
+      }
+    }
     const data = []
     for (let i = 0; i < pageIds.length; i++) {
       const id = pageIds[i]
