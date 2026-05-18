@@ -26,6 +26,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       for (const key of Object.keys(block)) {
         const val = (block[key]?.value?.value) as any
         if (!val) continue
+        // skip collection container blocks
+        if (val.type === "collection_view_page" || val.type === "collection_view") continue
         if (val.collection_id && collectionId && val.collection_id === collectionId) {
           found.push(key)
           continue

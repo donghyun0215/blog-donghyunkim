@@ -62,6 +62,9 @@ export const getPosts = async () => {
           const key = blockKeys[i]
           const val = block[key]?.value?.value
           if (!val) continue
+          const valType = (val as any).type
+          // skip collection view/page blocks (these are the collection container, not entries)
+          if (valType === "collection_view_page" || valType === "collection_view") continue
           // prefer explicit collection_id on the block
           if ((val as any).collection_id && collectionId && (val as any).collection_id === collectionId) {
             found.push(key)
