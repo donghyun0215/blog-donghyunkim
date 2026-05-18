@@ -16,12 +16,28 @@ import { CustomExtendedRecordMap } from "src/types/notion.type"
 // TODO: react query를 사용해서 처음 불러온 뒤로는 해당데이터만 사용하도록 수정
 export const getPosts = async () => {
   let id = CONFIG.notionConfig.pageId as string
+  if (!id) {
+    throw new Error(
+      "NOTION_PAGE_ID is not set. Set the NOTION_PAGE_ID env variable to your Notion page id (not the full URL)."
+    )
+  }
+
   const api = new NotionAPI()
 
-  const response = await api.getPage(id) as any as CustomExtendedRecordMap
+  let response: CustomExtendedRecordMap | null = null
+  try {
+    response = (await api.getPage(id)) as any as CustomExtendedRecordMap
+  } catch (err) {
+    // surface a clearer error during build/runtime
+    // eslint-disable-next-line no-console
+    console.error("Failed to fetch Notion page:", err)
+    throw new Error(
+      `Failed to fetch Notion page for NOTION_PAGE_ID=${id}. Ensure the page is shared to web and the ID is correct.`
+    )
+  }
   id = idToUuid(id)
-  const collection = Object.values(response.collection)[0]?.value.value;
-  const block = response.block ;
+  const collection = Object.values(response.collection || {})[0]?.value.value
+  const block = response.block
   const schema = collection?.schema
   const rawMetadata = block[id].value
   // Check Type
