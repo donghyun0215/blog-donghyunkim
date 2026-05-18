@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const uuid = idToUuid(pageIdEnv)
     const recordMap: any = await getRecordMap(pageIdEnv)
     const block = recordMap?.block || {}
-    const collection = Object.values(recordMap.collection || {})[0]?.value?.value || null
+  const collection = (Object.values(recordMap.collection || {})[0] as any)?.value?.value || null
 
     // try get page ids via collection_query first
     let pageIds = getAllPageIds(recordMap)
