@@ -12,8 +12,8 @@ const CONFIG = {
   },
   projects: [
     {
-      name: `journewn-log`,
-      href: "https://github.com/c-jeongyyun/journewn-log",
+      name: `donghyunkim-log`,
+      href: "https://github.com/donghyun0215/blog-donghyunkim",
     },
   ],
   // blog setting (required)
@@ -24,7 +24,7 @@ const CONFIG = {
   },
 
   // CONFIG configration (required)
-  link: "https://journewn-log.vercel.app",
+  link: "https://donghyunkim-log.vercel.app",
   since: 2026, // If leave this empty, current year will be used.
   lang: "en-US", // ['en-US', 'zh-CN', 'zh-HK', 'zh-TW', 'ja-JP', 'es-ES', 'ko-KR']
   ogImageGenerateURL: "https://og-image-korean.vercel.app", // The link to generate OG image, don't end with a slash
