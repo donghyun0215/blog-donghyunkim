@@ -63,16 +63,16 @@ export const getPosts = async () => {
           const val = block[key]?.value?.value
           if (!val) continue
           // prefer explicit collection_id on the block
-          if (val.collection_id && collectionId && val.collection_id === collectionId) {
+          if ((val as any).collection_id && collectionId && (val as any).collection_id === collectionId) {
             found.push(key)
             continue
           }
           // check parent_id or parent_table indicating it's part of the collection
-          if (val.parent_id && collectionId && val.parent_id === collectionId) {
+          if ((val as any).parent_id && collectionId && (val as any).parent_id === collectionId) {
             found.push(key)
             continue
           }
-          if (val.parent_table && val.parent_table === "collection") {
+          if ((val as any).parent_table && (val as any).parent_table === "collection") {
             found.push(key)
             continue
           }
