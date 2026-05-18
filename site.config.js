@@ -1,13 +1,13 @@
 const CONFIG = {
   // profile setting (required)
   profile: {
-    name: "최정윤",
+    name: "김동현",
     image: "/avatar.png", // If you want to create your own notion avatar, check out https://notion-avatar.vercel.app
-    role: "frontend developer",
-    bio: "알게 된 것과 깨달은 바를 요모조모 뜯어봅니다.",
-    email: "99choi0614@gmail.com",
-    linkedin: "c-jeongyyun",
-    github: "c-jeongyyun",
+    role: "BUSINESS/AI/SALES",
+    bio: "A closer look at what I learned and realized",
+    email: "lokim0215@gmail.com",
+    linkedin: "kimdonghyun0215",
+    github: "donghyun0215",
     instagram: "",
   },
   projects: [
@@ -18,8 +18,8 @@ const CONFIG = {
   ],
   // blog setting (required)
   blog: {
-    title: "journewn-log",
-    description: "welcome to journewn-log!",
+    title: "blog-donghyunkim",
+    description: "welcome to blog-donghyun!",
     scheme: "dark", // 'light' | 'dark' | 'system'
   },
 
