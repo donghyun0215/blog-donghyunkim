@@ -1,7 +1,7 @@
 const CONFIG = {
   // profile setting (required)
   profile: {
-    name: "김동현",
+    name: "Donghyun Kim",
     image: "/avatar.png", // If you want to create your own notion avatar, check out https://notion-avatar.vercel.app
     role: "BUSINESS/AI/SALES",
     bio: "A closer look at what I learned and realized",
